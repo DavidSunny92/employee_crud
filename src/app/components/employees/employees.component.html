@@ -1,0 +1,41 @@
+<div class="container pt-3">
+    <div class="row">
+        <div class="col-md-9">
+            <h5><b>Employee List</b></h5>
+        </div>
+
+        <div class="col-md-3 createbtn">
+            <button class="btn btn-small btn-info" (click)="onCreate()">Add New Employee</button>
+        </div>
+    </div>
+</div>
+
+
+
+<table class="table table-striped table-dark">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Employee Name</th>
+            <th scope="col">Employee Salary</th>
+            <th scope="col">Employee Age</th>
+            <th scope="col">Profile Image</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let employee of employees; let i=index">
+            <td>{{employee.id}}</td>
+            <td>{{employee.employee_name}}</td>
+            <td>{{employee.employee_salary}}</td>
+            <td>{{employee.employee_age}}</td>
+            <td>{{employee.employee_profileimage}}</td>
+            <td class="btn">
+                <button class="btn btn-small btn-info" [routerLink]="['/viewemployee']">View Detils</button>
+                <span> <button class="btn btn-small btn-info" >Edit</button></span>
+                <button class="btn btn-small btn-danger ">Delete</button>
+
+            </td>
+        </tr>
+    </tbody>
+</table>
