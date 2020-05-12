@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrManager } from 'ng6-toastr-notifications';
 
 
 
@@ -12,32 +13,44 @@ export class LoginformComponent implements OnInit {
 
   @ViewChild('loginForm', { static: false }) loginForm;
 
- 
+
 
   registerdata = {
     email: '',
     password: ''
   };
 
-  constructor(public router:Router) { }
-
+  constructor(public router: Router, public toastr: ToastrManager) { }
+  loginUser: any;
   ngOnInit() {
   }
 
   onsignup() {
-    if (this.loginForm.value.email.toLowerCase() ==='admin@gmail.com'){
+
+    if (this.loginForm.value.email.toLowerCase() === 'admin@gmail.com' && this.loginForm.value.password.toLowerCase() == 'admin123') {
+
+      this.loginUser = this.loginForm.value.email.toLowerCase();
+      this.loginUser = this.loginUser.split('@')
+      console.log(this.loginUser)
+      this.loginUser = this.loginUser[0]
+      this.toastr.successToastr(`Wellcome to ${this.loginUser}`, 'Success');
+      localStorage.setItem('User', this.loginUser);
       this.router.navigate(['/home'])
     }
     else {
-      this.router.navigate(['/wrongdetails'])
+      if (this.loginForm.value.email.toLowerCase() != 'admin@gmail.com' && this.loginForm.value.password.toLowerCase() != 'admin123') {
+        this.toastr.errorToastr('User Name & Password are wrong', 'Fail!');
+      } else if (this.loginForm.value.email.toLowerCase() != 'admin@gmail.com') {
+        this.toastr.errorToastr('User Name is wrong', 'Fail!');
+      } else if (this.loginForm.value.password.toLowerCase() != 'admin123') {
+        this.toastr.errorToastr(' Password is wrong', 'Fail!');
+      }
     }
-    {
-     this.loginForm.reset();
-    }
-  
+
+
   }
 
- 
-  }
+
+}
 
 

@@ -26,7 +26,9 @@ export class CreateComponent implements OnInit {
   constructor(private fb: FormBuilder, private dataser: DataService, public router: Router, public toastr: ToastrManager) { }
 
   ngOnInit() {
-
+    if (localStorage.getItem('User') != "admin") {
+      this.router.navigate(["/login"])
+    }
 
     this.reactiveForm = this.fb.group({
 

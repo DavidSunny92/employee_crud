@@ -21,6 +21,9 @@ export class UpdateemployeeComponent implements OnInit {
   public updateForm: FormGroup;
 
   ngOnInit() {
+    if (localStorage.getItem('User') != "admin") {
+      this.router.navigate(["/login"])
+    }
     this.route.params.subscribe(params => {
       this.getEmployee(params['id'])
     });

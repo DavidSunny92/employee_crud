@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
 import { Route } from '@angular/compiler/src/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrManager } from 'ng6-toastr-notifications';
 
 @Component({
@@ -12,10 +12,12 @@ import { ToastrManager } from 'ng6-toastr-notifications';
 export class ViewemployeeComponent implements OnInit {
 
   alldata: any[];
-
-  constructor(private dataser: DataService, private route: ActivatedRoute, public toastr: ToastrManager) { }
+  constructor(private dataser: DataService, private router: Router, private route: ActivatedRoute, public toastr: ToastrManager) { }
 
   ngOnInit() {
+    if (localStorage.getItem('User') != "admin") {
+      this.router.navigate(["/login"])
+    }
     this.route.params.subscribe(params => {
       this.getEmployee(params['id'])
     });

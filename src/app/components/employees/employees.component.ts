@@ -19,10 +19,14 @@ export class EmployeesComponent implements OnInit {
   isCreateEmployeeClicked: boolean = false;
   isEditEmployeeClicked: boolean = false;
   deleteAllbtn: boolean = false;
-
+  loginUser: string;
   constructor(private dataser: DataService, public router: Router, public toastr: ToastrManager) { }
 
   ngOnInit() {
+    this.loginUser = localStorage.getItem('User');
+    if (this.loginUser != "admin") {
+      this.router.navigate(["/login"])
+    }
     this.getEmp()
 
 
