@@ -1,28 +1,34 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {  Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  getEmpDetails(): Observable <any> {
-    console.log("result")
-    return this.http.get('http://dummy.restapiexample.com/api/v1/employees');
+  getEmpDetails(): Observable<any> {
+    return this.http.get('/api/v1/employees');
 
   }
 
-  createEmp(data):Observable <any> {
-
-    console.log("res")
-    return this.http.put('http://dummy.restapiexample.com/api/v1/update/17',{"name":"test1","salary":"1123","age":"23"})
+  createEmp(data): Observable<any> {
+    return this.http.post('/api/v1/create', data)
   }
 
-  viewEmp() : Observable <any>{
-    console.log("response")
-    return this.http.get('http://dummy.restapiexample.com/api/v1/employee/24');
+  updateEmp(data): Observable<any> {
+    var id = data.id;
+    delete data[id]
+    console.log(data)
+    return this.http.put(`/api/v1/update/${id}`, data)
+  }
+
+  viewEmp(id): Observable<any> {
+    return this.http.get(`/api/v1/employee/${id}`);
+  }
+  deleteEmp(id): Observable<any> {
+    return this.http.delete(`/api/v1/delete/${id}`);
   }
 }

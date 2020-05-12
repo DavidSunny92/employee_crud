@@ -18,6 +18,8 @@ import { DataService } from './services/data.service';
 import { CreateComponent } from './components/create/create.component';
 import { ViewemployeeComponent } from './components/viewemployee/viewemployee.component';
 import { UpdateemployeeComponent } from './components/updateemployee/updateemployee.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ng6-toastr-notifications';
 
 @NgModule({
   declarations: [
@@ -33,17 +35,19 @@ import { UpdateemployeeComponent } from './components/updateemployee/updateemplo
     CreateComponent,
     ViewemployeeComponent,
     UpdateemployeeComponent,
-    
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
 
   ],
-  providers: [UserService,DataService],
+  providers: [UserService, DataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

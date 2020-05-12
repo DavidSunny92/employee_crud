@@ -11,17 +11,17 @@ import { ViewemployeeComponent } from './components/viewemployee/viewemployee.co
 import { UpdateemployeeComponent } from './components/updateemployee/updateemployee.component';
 
 const routes: Routes = [
-  
-  {path:'', redirectTo:'/login', pathMatch:'full'},
-  {path:'login', component:LoginformComponent},
-  {path:'logout', component:LogoutComponent},
-  {path:'wrongdetails', component:WrongdetailsComponent},
-  {path:'home',component: HomeComponent},
-  {path:'employees',component: EmployeesComponent},
-  {path:'create',component:CreateComponent},
-  {path:'viewemployee',component:ViewemployeeComponent},
-  {path:'update',component:UpdateemployeeComponent},
-  { path:'**', component: PagenotfoundComponent}
+
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'login', component: LoginformComponent },
+  { path: 'logout', component: LogoutComponent },
+  { path: 'wrongdetails', component: WrongdetailsComponent },
+  { path: 'home', component: HomeComponent },
+  { path: 'employees', component: EmployeesComponent },
+  { path: 'create', component: CreateComponent },
+  { path: 'employee/:id', component: ViewemployeeComponent },
+  { path: 'update/:id', component: UpdateemployeeComponent },
+  { path: '**', component: PagenotfoundComponent }
 
 ];
 
