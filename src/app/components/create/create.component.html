@@ -5,25 +5,15 @@
 
 
     <div id="id">
-        <form [formGroup]="reactiveForm" novalidate class="form-group" style="background-color: rgb(238, 229, 101);"
+        <form [formGroup]="studentForm" novalidate class="form-group" style="background-color: rgb(238, 229, 101);"
             (submit)="onreactivesubmit()">
 
             <div class="row">
-                <div class="col-lg-12">
-                    <label>ID</label>
-                    <input type="text" class="form-control" placeholder="Enter Your Id" formControlName="id">
-                    <div class="form-control-feedback" *ngIf="x.id.errors && (x.id.touched || x.id.dirty)">
-                        <span *ngIf="x.id.errors.required" class="text-danger">Id is Required</span>
-                    </div>
-                </div>
-
-
                 <div class="col-md-12">
                     <label>Employee Name</label>
-                    <input type="text" class="form-control" placeholder="Enter Your Name"
-                        formControlName="name">
-                    <div class="form-control-feedback"
-                        *ngIf="x.name.errors && (x.name.touched || x.name.dirty)">
+                    <input type="text" class="form-control" placeholder="Enter Your Name" formControlName="name"
+                        [ngClass]="{ 'is-invalid': submitted && x.name.errors }">
+                    <div class="form-control-feedback" *ngIf="x.name.errors && (x.name.touched || x.name.dirty)">
                         <span *ngIf="x.name.errors.required" class="text-danger">Name is Required</span>
                     </div>
 
@@ -35,10 +25,9 @@
             <div class="row">
                 <div class="col-lg-6">
                     <label>Employee Salary</label>
-                    <input type="text" class="form-control" placeholder="Enter Your Salary"
-                        formControlName="salary">
-                    <div class="form-control-feedback"
-                        *ngIf="x.salary.errors && (x.salary.touched || x.salary.dirty)">
+                    <input type="text" class="form-control" placeholder="Enter Your Salary" formControlName="salary"
+                        [ngClass]="{ 'is-invalid': submitted && x.salary.errors }">
+                    <div class="form-control-feedback" *ngIf="x.salary.errors && (x.salary.touched || x.salary.dirty)">
                         <span *ngIf="x.salary.errors.required" class="text-danger">Salary is Required</span>
                     </div>
                 </div>
@@ -47,18 +36,24 @@
 
                 <div class="col-lg-6">
                     <label>Employee Age</label>
-                    <input type="text" class="form-control" placeholder="Enter Your Age" formControlName="age">
-                    <div class="form-control-feedback"
-                        *ngIf="x.age.errors && (x.age.touched || x.age.dirty)">
+                    <input type="text" class="form-control" placeholder="Enter Your Age" formControlName="age"
+                        [ngClass]="{ 'is-invalid': submitted && x.age.errors }">
+                    <div class="form-control-feedback" *ngIf="x.age.errors && (x.age.touched || x.age.dirty)">
                         <span *ngIf="x.age.errors.required" class="text-danger">Age is Required</span>
                     </div>
                 </div>
             </div>
 
 
-        
-
-            <button type="submit" class="createbtn btn btn-primary form-control">Create</button>
+            <br>
+            <div class="col-lg-12">
+                <button type="submit" class="createbtn btn btn-primary form-control">{{submitButton}}</button>
+            </div>
+            <div class="pt-1">
+                <button [routerLink]="['/employees']" class="btn btn-secondary form-control">
+                    <h4><b>Cancel</b></h4>
+                </button>
+            </div>
 
         </form>
     </div>

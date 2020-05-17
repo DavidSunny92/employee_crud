@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DataService } from 'src/app/services/data.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrManager } from 'ng6-toastr-notifications';
 
 @Component({
@@ -11,51 +11,38 @@ import { ToastrManager } from 'ng6-toastr-notifications';
 })
 export class CreateComponent implements OnInit {
 
-
-
-  createEmployee = {
-    id: '',
-    employeename: '',
-    employeesalary: '',
-    employeeage: '',
-    profileimage: ''
-  };
-
+  submitted = false;
+  action: string;
   isEmployeeCreated: boolean = false
-  public reactiveForm: FormGroup;
-  constructor(private fb: FormBuilder, private dataser: DataService, public router: Router, public toastr: ToastrManager) { }
+  submitButton: string = 'Create';
+  public studentForm: FormGroup;
+  constructor(private fb: FormBuilder, private dataser: DataService, private route: ActivatedRoute, public router: Router, public toastr: ToastrManager) { }
 
   ngOnInit() {
-    if (localStorage.getItem('User') != "admin") {
-      this.router.navigate(["/login"])
-    }
 
-    this.reactiveForm = this.fb.group({
+    this.route.params.subscribe(params => {
+      this.action = params['id'];
+      if (this.action != 'create') {
+        this.getEmployee(this.action)
+        this.submitButton = 'Update';
+      }
+    });
+    this.studentForm = this.fb.group({
 
-      id: ['', Validators.required],
       name: ['', Validators.required],
       salary: ['', Validators.required],
       age: ['', Validators.required]
     })
 
   }
-  get x() { return this.reactiveForm.controls; }
-
-  onreactivesubmit() {
-    console.log(this.reactiveForm.value)
-    this.dataser.createEmp(this.reactiveForm.value).subscribe(res => {
-      console.log(res);
-      if (res.status == "success") {
-        this.toastr.successToastr('Employee created successfully ', 'Success!');
+  get x() { return this.studentForm.controls; }
+  getEmployee(id) {
+    this.dataser.viewEmp(id).subscribe(res => {
+      if (res.data == null) {
+        this.toastr.errorToastr('Something went wrong', 'Fail!');
       } else {
-        var msg = "Something Went Wrong"
-        if (res.message) {
-          msg = res.message
-        }
-        this.toastr.errorToastr(msg, 'Fail!');
+        this.studentForm.patchValue({ "name": res.data.employee_name, "salary": res.data.employee_salary, "age": res.data.employee_age });
       }
-      this.router.navigate(['/employees']);
-
     }, error => {
       var msg = "Something Went Wrong"
       if (error.message) {
@@ -63,6 +50,58 @@ export class CreateComponent implements OnInit {
       }
       this.toastr.errorToastr(msg, 'Fail!');
     })
+  }
+  onreactivesubmit() {
+    console.log(this.studentForm.value)
+    this.submitted = true;
+
+    // stop here if form is invalid
+    if (this.studentForm.invalid) {
+      return;
+    }
+    if (this.action == 'create') {
+      this.dataser.createEmp(this.studentForm.value).subscribe(res => {
+        console.log(res);
+        if (res.status == "success") {
+          this.toastr.successToastr('Employee created successfully ', 'Success!');
+        } else {
+          var msg = "Something Went Wrong"
+          if (res.message) {
+            msg = res.message
+          }
+          this.toastr.errorToastr(msg, 'Fail!');
+        }
+        this.router.navigate(['/employees']);
+
+      }, error => {
+        var msg = "Something Went Wrong"
+        if (error.message) {
+          msg = error.message
+        }
+        this.toastr.errorToastr(msg, 'Fail!');
+      })
+    } else {
+      this.dataser.updateEmp(this.studentForm.value, this.action).subscribe(res => {
+        console.log(res);
+        if (res.status == "success") {
+          this.toastr.successToastr('Employee updated successfully ', 'Success!');
+        } else {
+          var msg = "Something Went Wrong"
+          if (res.message) {
+            msg = res.message
+          }
+          this.toastr.errorToastr(msg, 'Fail!');
+        }
+        this.router.navigate(['/employees']);
+
+      }, error => {
+        var msg = "Something Went Wrong"
+        if (error.message) {
+          msg = error.message
+        }
+        this.toastr.errorToastr(msg, 'Fail!');
+      })
+    }
 
   }
 

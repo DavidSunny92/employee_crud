@@ -11,13 +11,11 @@ import { ToastrManager } from 'ng6-toastr-notifications';
 })
 export class ViewemployeeComponent implements OnInit {
 
-  alldata: any[];
+  alldata: any = false;
   constructor(private dataser: DataService, private router: Router, private route: ActivatedRoute, public toastr: ToastrManager) { }
 
   ngOnInit() {
-    if (localStorage.getItem('User') != "admin") {
-      this.router.navigate(["/login"])
-    }
+
     this.route.params.subscribe(params => {
       this.getEmployee(params['id'])
     });
@@ -26,9 +24,11 @@ export class ViewemployeeComponent implements OnInit {
 
   getEmployee(id) {
     this.dataser.viewEmp(id).subscribe(res => {
-      this.alldata = res.data;
+
       if (res.data == null) {
-        this.toastr.errorToastr('Something went wrong', 'Fail!');
+        this.toastr.errorToastr('Data is null,Something went wrong', 'Fail!');
+      } else {
+        this.alldata = res.data;
       }
     }, error => {
       var msg = "Something Went Wrong"

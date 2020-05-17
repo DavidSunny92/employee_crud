@@ -7,8 +7,11 @@ import { EmployeesComponent } from './components/employees/employees.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { WrongdetailsComponent } from './components/wrongdetails/wrongdetails.component';
 import { CreateComponent } from './components/create/create.component';
-import { ViewemployeeComponent } from './components/viewemployee/viewemployee.component';
+// import { ViewemployeeComponent } from './components/viewModule/viewemployee/viewemployee.component';
 import { UpdateemployeeComponent } from './components/updateemployee/updateemployee.component';
+import {
+  AuthGuard as AuthGuard
+} from './auth/auth-guard.service';
 
 const routes: Routes = [
 
@@ -16,12 +19,21 @@ const routes: Routes = [
   { path: 'login', component: LoginformComponent },
   { path: 'logout', component: LogoutComponent },
   { path: 'wrongdetails', component: WrongdetailsComponent },
-  { path: 'home', component: HomeComponent },
-  { path: 'employees', component: EmployeesComponent },
-  { path: 'create', component: CreateComponent },
-  { path: 'employee/:id', component: ViewemployeeComponent },
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+  {
+    path: 'employees', component: EmployeesComponent
+  },
+  { path: 'employees/:id', component: CreateComponent },
+  // { path: 'employee/:id', component: ViewemployeeComponent },
   { path: 'update/:id', component: UpdateemployeeComponent },
-  { path: '**', component: PagenotfoundComponent }
+  // { path: '**', component: PagenotfoundComponent },
+  {
+    path: "employee-lazy-load",
+    loadChildren: () => import('../../src/app/components/viewModule/view/view.module').then(m => m.ViewModule)
+
+  }
+  //  loadChildren: "./components/viewModule/view/view.module#ViewModule",
+
 
 ];
 

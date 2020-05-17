@@ -23,10 +23,6 @@ export class EmployeesComponent implements OnInit {
   constructor(private dataser: DataService, public router: Router, public toastr: ToastrManager) { }
 
   ngOnInit() {
-    this.loginUser = localStorage.getItem('User');
-    if (this.loginUser != "admin") {
-      this.router.navigate(["/login"])
-    }
     this.getEmp()
 
 
@@ -57,7 +53,7 @@ export class EmployeesComponent implements OnInit {
   }
   onCreate() {
     this.isCreateEmployeeClicked = true;
-    this.router.navigate(['/create']);
+    this.router.navigate(['/employees/create']);
   }
   deleteEmploye(id) {
     this.dataser.deleteEmp(id).subscribe(res => {

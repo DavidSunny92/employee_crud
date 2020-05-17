@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrManager } from 'ng6-toastr-notifications';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 
 
@@ -11,22 +12,27 @@ import { ToastrManager } from 'ng6-toastr-notifications';
 })
 export class LoginformComponent implements OnInit {
 
-  @ViewChild('loginForm', { static: false }) loginForm;
+  // @ViewChild('loginForm', { static: false }) loginForm;
 
 
-
-  registerdata = {
-    email: '',
-    password: ''
-  };
-
-  constructor(public router: Router, public toastr: ToastrManager) { }
+  constructor(private fb: FormBuilder, public router: Router, public toastr: ToastrManager) { }
+  public loginForm: FormGroup;
   loginUser: any;
+  submitted = false;
   ngOnInit() {
+    this.loginForm = this.fb.group({
+      email: ['', Validators.required],
+      password: ['', Validators.required]
+    })
   }
-
+  get x() { return this.loginForm.controls; }
   onsignup() {
+    this.submitted = true;
 
+    // stop here if form is invalid
+    if (this.loginForm.invalid) {
+      return;
+    }
     if (this.loginForm.value.email.toLowerCase() === 'admin@gmail.com' && this.loginForm.value.password.toLowerCase() == 'admin123') {
 
       this.loginUser = this.loginForm.value.email.toLowerCase();

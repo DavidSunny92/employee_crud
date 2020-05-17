@@ -18,10 +18,7 @@ export class DataService {
     return this.http.post('/api/v1/create', data)
   }
 
-  updateEmp(data): Observable<any> {
-    var id = data.id;
-    delete data[id]
-    console.log(data)
+  updateEmp(data, id): Observable<any> {
     return this.http.put(`/api/v1/update/${id}`, data)
   }
 

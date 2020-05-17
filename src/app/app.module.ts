@@ -16,7 +16,7 @@ import { LogoutComponent } from './components/logout/logout.component';
 import { WrongdetailsComponent } from './components/wrongdetails/wrongdetails.component';
 import { DataService } from './services/data.service';
 import { CreateComponent } from './components/create/create.component';
-import { ViewemployeeComponent } from './components/viewemployee/viewemployee.component';
+// import { ViewemployeeComponent } from './components/viewModule/viewemployee/viewemployee.component';
 import { UpdateemployeeComponent } from './components/updateemployee/updateemployee.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ng6-toastr-notifications';
@@ -33,7 +33,7 @@ import { ToastrModule } from 'ng6-toastr-notifications';
     LogoutComponent,
     WrongdetailsComponent,
     CreateComponent,
-    ViewemployeeComponent,
+    // ViewemployeeComponent,
     UpdateemployeeComponent,
 
   ],

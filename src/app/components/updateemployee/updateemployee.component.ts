@@ -21,9 +21,7 @@ export class UpdateemployeeComponent implements OnInit {
   public updateForm: FormGroup;
 
   ngOnInit() {
-    if (localStorage.getItem('User') != "admin") {
-      this.router.navigate(["/login"])
-    }
+
     this.route.params.subscribe(params => {
       this.getEmployee(params['id'])
     });
@@ -48,7 +46,7 @@ export class UpdateemployeeComponent implements OnInit {
 
   updateEmployee() {
     console.log(this.updateForm.value)
-    this.dataser.updateEmp(this.updateForm.value).subscribe(res => {
+    this.dataser.updateEmp(this.updateForm.value, '').subscribe(res => {
       console.log(res);
       if (res.status == "success") {
         this.toastr.successToastr('Employee updated successfully ', 'Success!');

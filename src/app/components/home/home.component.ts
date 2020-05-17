@@ -11,11 +11,7 @@ export class HomeComponent implements OnInit {
   constructor(private router: Router) { }
   loginUser: string;
   ngOnInit() {
-    this.loginUser = localStorage.getItem("User")
-    console.log(this.loginUser)
-    if (this.loginUser != "admin") {
-      this.router.navigate(["/login"])
-    }
+
   }
 
 }
